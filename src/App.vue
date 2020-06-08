@@ -1,24 +1,20 @@
 <template>
   <v-app>
-    <!-- <Header /> -->
-    <Test></Test>
+    <Header />
+    <Test />
+    <router-view />
   </v-app>
 </template>
 
 <script>
-// import Header from "@/components/Header";
+import Header from "@/components/Header";
 import Test from "@/components/Test";
 
 export default {
   name: "App",
-
   components: {
-    // Header,
-    Test,
-  },
-
-  data: () => ({
-    //
-  }),
+    Header,
+    Test
+  }
 };
 </script>
