@@ -4,7 +4,7 @@
       <v-toolbar-title class="display-1 font-weight-black">VoiMin</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon>
-        <v-icon>fas fa-microphone-alt</v-icon>
+        <v-icon>far fa-comment-dots</v-icon>
       </v-btn>
       <v-btn icon>
         <v-icon>fas fa-history</v-icon>
