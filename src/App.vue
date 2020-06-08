@@ -1,25 +1,24 @@
 <template>
   <v-app>
-    <Header />
-    <Footer />
+    <!-- <Header /> -->
+    <Test></Test>
   </v-app>
 </template>
-  
 
 <script>
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+// import Header from "@/components/Header";
+import Test from "@/components/Test";
 
 export default {
   name: "App",
 
   components: {
-    Header,
-    Footer
+    // Header,
+    Test,
   },
 
   data: () => ({
     //
-  })
+  }),
 };
 </script>
