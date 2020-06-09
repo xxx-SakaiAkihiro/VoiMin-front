@@ -1,11 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import firebase from "firebase";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     content: [],
+    login_user: null,
+    firebaseUser: null,
   },
   mutations: {
     /**
@@ -15,6 +18,12 @@ export default new Vuex.Store({
     setContent(state, Content) {
       state.content.push(Content);
     },
+    setLoginUser(state, user) {
+      state.login_user = user;
+    },
+    setFirebaseUser(state, user) {
+      state.firebaseUser = user;
+    },
   },
   actions: {
     /**
@@ -23,6 +32,16 @@ export default new Vuex.Store({
      */
     setContent({ commit }, Content) {
       commit("setContent", Content);
+    },
+    login() {
+      const google_auth_provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithRedirect(google_auth_provider);
+    },
+    setLoginUser({ commit, user }) {
+      commit("setLoginUser", user);
+    },
+    setFirebaseUser({ commit }, user) {
+      commit("setFirebaseUser", user);
     },
   },
   modules: {},
