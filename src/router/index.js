@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
-import Explanation from "../views/Explanation.vue";
+// import Explanation from "../views/ExplanationModal.vue";
 import SaveList from "../views/SaveList.vue";
 import SaveDetail from "../views/SaveDetail.vue";
 import How from "../views/How.vue";
@@ -20,11 +20,11 @@ const routes = [
     name: "Home",
     component: Home,
   },
-  {
-    path: "/explanation",
-    name: "Explanation",
-    component: Explanation,
-  },
+  // {
+  //   path: "/explanation",
+  //   name: "Explanation",
+  //   component: Explanation,
+  // },
   {
     path: "/saveList",
     name: "SaveList",

@@ -1,15 +1,15 @@
 <template>
   <v-app>
     <v-container fluid>
-      <v-text-field
+      <v-textarea
+        class="mx-8 mt-3"
         outlined
-        filled
-        label="CONTENT"
         auto-grow
+        label="CONTENT"
+        rows="14"
         v-model="final"
-        height="340"
       >
-      </v-text-field>
+      </v-textarea>
       <!-- ステータスの文章 -->
       <v-row justify="center" class="mb-3">
         <v-card class="text-center" max-width="300">
@@ -40,6 +40,7 @@
               show = !show;
               stop();
             "
+            v-b-modal.authority-modal
             v-else
             color="primary"
             :elevation="hover ? 12 : 2"
@@ -98,7 +99,7 @@ export default {
             interim += "　" + results[i][0].transcript;
           }
         }
-        this.final += final + interim;
+        this.final = final + interim;
       };
     },
     // ストップボタンを押した時
@@ -119,3 +120,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.modal-header,
+.modal-body {
+  padding: 5px 25px;
+}
+.modal-header {
+  border-bottom: 1px solid #ddd;
+}
+</style>

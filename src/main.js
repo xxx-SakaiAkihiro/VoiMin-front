@@ -6,11 +6,18 @@ import vuetify from "./plugins/vuetify";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import firebase from "firebase";
-import '@fortawesome/fontawesome-free/css/all.css'
+import VModal from "vue-js-modal";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 Vue.config.productionTip = false;
 axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
-Vue.use(VueAxios, axios);
+Vue.use(VueAxios, axios, VModal);
+
+// bootstrap-vueのインポート
+import BootstrapVue from "bootstrap-vue";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+Vue.use(BootstrapVue);
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -21,7 +28,7 @@ var firebaseConfig = {
   storageBucket: "voimin-front.appspot.com",
   messagingSenderId: "159523083120",
   appId: "1:159523083120:web:6f8af4ae8f0583381e75b5",
-  measurementId: "G-YM4S29QQXT"
+  measurementId: "G-YM4S29QQXT",
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
