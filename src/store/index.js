@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     content: [],
-    login_user: null,
+    login_user: [],
     firebaseUser: null,
   },
   mutations: {

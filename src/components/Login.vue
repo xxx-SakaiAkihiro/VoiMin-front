@@ -31,23 +31,45 @@ import { mapActions } from "vuex";
 
 export default {
   methods: {
-    ...mapActions(["login", "setLoginUser","setFirebaseUser"])
+    ...mapActions(["login", "setLoginUser", "setFirebaseUser"])
   },
-  mounted(){
+  mounted() {
     axios.defaults.headers.common["Authorization"] = "";
     firebase.auth().onAuthStateChanged(user => {
-        this.setFirebaseUser(user);
-        var googleMailAddress = firebase.auth().currentUser.email;
-        axios.post("/loginCheck",{
-          mailAddress:googleMailAddress
+      this.setFirebaseUser(user);
+      var googleName = firebase.auth().currentUser.displayName;
+      var googleMailAddress = firebase.auth().currentUser.email;
+      // ログイン時にアカウントの有無確認
+      console.log("メールは" + googleMailAddress);
+      axios
+        .post("/registerUser", {
+          userName: googleName,
+          mailAddress: googleMailAddress
         })
         .then(response => {
+          console.log("最初に返ってくる" + response.data);
+          // アカウントが無い場合
+          // if (response.data === "") {
+          //   // アカウントを登録
+          //   axios.post("/registerUser", {
+          //     mailAddress: googleMailAddress
+          //   });
+          //   // アカウントの有無確認
+          //   axios
+          //     .post("/loginCheck", {
+          //       mailAddress: googleMailAddress
+          //     })
+          //     .then(response => {
+          //       this.setLoginUser(response.data);
+          //     });
+          // }
+          // // アカウントが有る場合
+          // else {
           this.setLoginUser(response.data);
-          console.log(response.data);
-        })
-          console.log(googleMailAddress);
-      console.log("終わり")
-    })
-  },
+          console.log(this.$store.state.login_user);
+          // }
+        });
+    });
+  }
 };
 </script>
