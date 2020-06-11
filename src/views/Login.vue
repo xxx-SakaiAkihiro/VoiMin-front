@@ -1,7 +1,7 @@
 <template>
   <v-container class="mt-5">
     <v-row align-v="center" align-h="center">
-      <v-col lg="6">
+      <v-col>
         <Login />
       </v-col>
     </v-row>

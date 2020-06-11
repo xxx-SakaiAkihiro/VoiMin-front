@@ -7,11 +7,12 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import firebase from "firebase";
 import VModal from "vue-js-modal";
+import VueLoading from 'vue-loading-template'
 import "@fortawesome/fontawesome-free/css/all.css";
 
 Vue.config.productionTip = false;
 axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
-Vue.use(VueAxios, axios, VModal);
+Vue.use(VueAxios, axios, VModal,VueLoading);
 
 // bootstrap-vueのインポート
 import BootstrapVue from "bootstrap-vue";

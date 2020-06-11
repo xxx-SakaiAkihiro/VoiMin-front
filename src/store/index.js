@@ -7,7 +7,13 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     content: [],
-    login_user: [],
+    loginUser: {
+      userId: 0,
+      userName: "",
+      mailAddress: "",
+      registerDate: "",
+      statusId: 0,
+    },
     firebaseUser: null,
   },
   mutations: {
@@ -18,9 +24,17 @@ export default new Vuex.Store({
     setContent(state, Content) {
       state.content.push(Content);
     },
+    /**
+     * ログインしてるユーザーをstateにセットする
+     * @param {*} user ユーザー
+     */
     setLoginUser(state, user) {
-      state.login_user = user;
+      state.loginUser = user;
     },
+    /**
+     * firebaseの情報をstateにセットする
+     * @param {*} user ユーザー
+     */
     setFirebaseUser(state, user) {
       state.firebaseUser = user;
     },
@@ -33,13 +47,24 @@ export default new Vuex.Store({
     setContent({ commit }, Content) {
       commit("setContent", Content);
     },
+    /**
+     * Google認証ログインを使ってログイン作業をする
+     */
     login() {
       const google_auth_provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(google_auth_provider);
     },
+    /**
+     * ログインしてるユーザーをstateにセットする
+     * @param {*} user ユーザー
+     */
     setLoginUser({ commit, user }) {
       commit("setLoginUser", user);
     },
+    /**
+     * firebaseの情報をstateにセットする
+     * @param {*} user ユーザー
+     */
     setFirebaseUser({ commit }, user) {
       commit("setFirebaseUser", user);
     },

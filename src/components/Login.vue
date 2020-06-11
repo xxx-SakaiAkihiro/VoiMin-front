@@ -1,6 +1,6 @@
 <template>
   <v-container text-center justify-center>
-    <v-layout row wrap>
+    <v-layout row wrap v-show="!loading">
       <v-flex>
         <h1>VoiMin</h1>
         <p>音声認識で議事録を作りましょう</p>
@@ -20,55 +20,57 @@
         </v-btn>
       </v-flex>
     </v-layout>
+    <v-alert v-if="err !== ''" outlined type="error" style="white-space:pre-wrap;" text>{{ err }}</v-alert>
+    <Loading v-show="loading"></Loading>
   </v-container>
 </template>
-
 
 <script>
 import axios from "axios";
 import firebase from "firebase";
 import { mapActions } from "vuex";
+import Loading from "@/components/Loading";
 
 export default {
+  data() {
+    return {
+      name: "Login",
+      err: "",
+      loading: true
+    };
+  },
+  components: {
+    Loading
+  },
   methods: {
     ...mapActions(["login", "setLoginUser", "setFirebaseUser"])
   },
   mounted() {
-    axios.defaults.headers.common["Authorization"] = "";
     firebase.auth().onAuthStateChanged(user => {
-      this.setFirebaseUser(user);
-      var googleName = firebase.auth().currentUser.displayName;
-      var googleMailAddress = firebase.auth().currentUser.email;
-      // ログイン時にアカウントの有無確認
-      console.log("メールは" + googleMailAddress);
-      axios
-        .post("/registerUser", {
-          userName: googleName,
-          mailAddress: googleMailAddress
-        })
-        .then(response => {
-          console.log("最初に返ってくる" + response.data);
-          // アカウントが無い場合
-          // if (response.data === "") {
-          //   // アカウントを登録
-          //   axios.post("/registerUser", {
-          //     mailAddress: googleMailAddress
-          //   });
-          //   // アカウントの有無確認
-          //   axios
-          //     .post("/loginCheck", {
-          //       mailAddress: googleMailAddress
-          //     })
-          //     .then(response => {
-          //       this.setLoginUser(response.data);
-          //     });
-          // }
-          // // アカウントが有る場合
-          // else {
-          this.setLoginUser(response.data);
-          console.log(this.$store.state.login_user);
-          // }
-        });
+      this.loading = false;
+      if (user) {
+        this.setFirebaseUser(user);
+        var googleName = firebase.auth().currentUser.displayName;
+        var googleMailAddress = firebase.auth().currentUser.email;
+        /** ログイン時にアカウントの有無確認 */
+        axios
+          .post("/loginCheck", {
+            userName: googleName,
+            mailAddress: googleMailAddress
+          })
+          .then(response => {
+            this.setLoginUser(response.data);
+            /** メールアドレスのドメインが組織外のユーザーの場合 */
+            if (response.data.statusId == 2) {
+              this.err =
+                "メールドメインがrakus-partners.co.jp\nまたはrakus.co.jpのユーザーのみログインできます";
+            } else {
+              this.$router.push("/home");
+            }
+          });
+      } else {
+        firebase.auth().signOut();
+      }
     });
   }
 };

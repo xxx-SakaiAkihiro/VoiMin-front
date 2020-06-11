@@ -7,7 +7,8 @@
 </template>
 
 <script>
-import firebase from "firebase";
+// import { mapActions } from "vuex";
+// import firebase from "firebase";
 import Header from "@/components/Header";
 // import Test from "@/components/Test";
 
@@ -17,12 +18,15 @@ export default {
     Header,
     // Test
   },
-  created() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setLoginUser(user);
-      }
-    });
-  }
+  // methods: {
+  //   ...mapActions(["setLoginUser"])
+  // },
+  // created() {
+  //   firebase.auth().onAuthStateChanged(user => {
+  //     if (user) {
+  //       this.setLoginUser(user);
+  //     }
+  //   });
+  // }
 };
 </script>
