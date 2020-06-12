@@ -58,7 +58,7 @@ export default new Vuex.Store({
      * ログインしてるユーザーをstateにセットする
      * @param {*} user ユーザー
      */
-    setLoginUser({ commit, user }) {
+    setLoginUser({ commit }, user) {
       commit("setLoginUser", user);
     },
     /**
@@ -69,5 +69,10 @@ export default new Vuex.Store({
       commit("setFirebaseUser", user);
     },
   },
-  modules: {},
+  getters: {
+    /**
+     * ログインユーザーの名前を取得する
+     */
+    userName: (state) => (state.loginUser ? state.loginUser.userName : ""),
+  },
 });

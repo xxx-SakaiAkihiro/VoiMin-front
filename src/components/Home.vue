@@ -33,6 +33,7 @@
                 :elevation="hover ? 12 : 2"
                 fab
                 x-large
+                style="outline:0"
               >
                 <v-icon>fas fa-microphone</v-icon>
               </v-btn>
@@ -50,6 +51,7 @@
                 :elevation="hover ? 12 : 2"
                 fab
                 x-large
+                style="outline:0"
               >
                 <v-icon color="red">fas fa-square</v-icon>
               </v-btn>
