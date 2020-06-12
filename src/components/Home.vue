@@ -190,7 +190,11 @@ export default {
           remarks: this.note,
         })
         .then(() => {
+          alert("議事録内容を保存しました");
           this.$router.push("/saveList");
+        })
+        .catch((e) => {
+          alert("問題が発生しました。もう1度作業をやり直してください。" + e);
         });
     },
     keyUp() {

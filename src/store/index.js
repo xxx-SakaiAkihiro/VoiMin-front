@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    recordingList: [],
     content: [],
     loginUser: {
       userId: 0,
@@ -17,6 +18,13 @@ export default new Vuex.Store({
     firebaseUser: null,
   },
   mutations: {
+    /**
+     *録音記録Listを格納する
+     * @param {*} recordingList 録音記録List
+     */
+    setRecordingList(state, recordingList) {
+      state.recordingList = recordingList;
+    },
     /**
      * 音声入力の内容を格納する
      * @param {*} Content 議事録内容
@@ -46,6 +54,13 @@ export default new Vuex.Store({
      */
     setContent({ commit }, Content) {
       commit("setContent", Content);
+    },
+    /**
+     * 録音記録Listを格納する
+     * @param {*} recordingList 録音記録List
+     */
+    setRecordingList({ commit }, recordingList) {
+      commit("setRecordingList", recordingList);
     },
     /**
      * Google認証ログインを使ってログイン作業をする
