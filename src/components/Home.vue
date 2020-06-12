@@ -169,7 +169,7 @@ export default {
     },
     register() {
       axios
-        .post("/registerUser", {
+        .post("/registerRecording", {
           userId: 1,
           // userId: this.$store.state.loginUser.userId,
           title: this.title,
