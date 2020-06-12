@@ -1,7 +1,7 @@
 <template>
   <v-card class="mx-8 mt-5">
     <v-list class="mx-5 my-3">
-      <v-header inset class="title">2020/6/12</v-header>
+      <v-subheader class="title">2020/6/12</v-subheader>
       <v-list-item @click="toPage('/saveDetail')">
         <v-list-item-content>
           <v-list-item-title>タイトル1</v-list-item-title>
@@ -26,7 +26,7 @@
 
       <v-divider></v-divider>
 
-      <v-header inset class="title">2020/6/11</v-header>
+      <v-subheader class="title">2020/6/11</v-subheader>
       <v-list-item @click="toPage('/saveDetail')">
         <v-list-item-content>
           <v-list-item-title>タイトル3</v-list-item-title>
