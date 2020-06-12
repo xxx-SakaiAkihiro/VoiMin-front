@@ -1,5 +1,5 @@
 <template>
-  <v-row><Home /></v-row>
+  <Home />
 </template>
 
 <script>
