@@ -68,21 +68,28 @@
                       label="Title"
                       required
                       v-model="title"
+                      counter="50"
+                      :rules="[rulesTitle, required]"
+                      @keyup="keyUp"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
                       label="Member"
-                      required
                       v-model="member"
+                      counter="50"
+                      :rules="rulesMember"
+                      @keyup="keyUp"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-textarea
                       rows="3"
                       label="Note"
-                      required
                       v-model="note"
+                      counter="200"
+                      :rules="rulesNote"
+                      @keyup="keyUp"
                     ></v-textarea>
                   </v-col>
                 </v-row>
@@ -94,6 +101,7 @@
                 >Close</v-btn
               >
               <v-btn
+                v-bind:disabled="isPush"
                 color="blue darken-1"
                 text
                 @click="
@@ -115,6 +123,11 @@ import axios from "axios";
 export default {
   data() {
     return {
+      isPush: true,
+      rulesNote: [(v) => v.length <= 200 || "200字以内で記入してください"],
+      rulesMember: [(v) => v.length <= 50 || "50字以内で記入してください"],
+      rulesTitle: [(v) => v.length <= 50 || "50字以内で記入してください"],
+      required: (value) => !!value || "必ず入力してください",
       dialog: false,
       show: true,
       status: "ボタンを押すと音声入力が開始します",
@@ -170,8 +183,7 @@ export default {
     register() {
       axios
         .post("/registerRecording", {
-          userId: 1,
-          // userId: this.$store.state.loginUser.userId,
+          userId: this.$store.state.loginUser.userId,
           title: this.title,
           content: this.final,
           member: this.member,
@@ -180,6 +192,22 @@ export default {
         .then(() => {
           this.$router.push("/saveList");
         });
+    },
+    keyUp() {
+      if (
+        this.note.length > 200 ||
+        this.member.length > 50 ||
+        this.title.length > 50 ||
+        this.title.length == 0
+      ) {
+        this.isPush = true;
+      } else if (
+        this.note.length <= 200 &&
+        this.member.length <= 50 &&
+        0 < this.title.length <= 50
+      ) {
+        this.isPush = false;
+      }
     },
   },
   created() {
