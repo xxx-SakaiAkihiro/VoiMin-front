@@ -5,7 +5,7 @@
         class="mx-8 mt-3"
         outlined
         auto-grow
-        label="CONTENT"
+        label="Content"
         rows="14"
         v-model="final"
       >
@@ -19,51 +19,111 @@
         </v-card>
       </v-row>
       <v-row justify="center">
-        <v-hover v-slot:default="{ hover }">
-          <!-- スタートボタン -->
-          <v-btn
-            @click="
-              show = !show;
-              recording();
-            "
-            v-if="show"
-            color="primary"
-            :elevation="hover ? 12 : 2"
-            fab
-            x-large
-          >
-            <v-icon>fas fa-microphone</v-icon>
-          </v-btn>
-          <!-- ストップボタン -->
-          <v-btn
-            @click="
-              show = !show;
-              stop();
-            "
-            v-b-modal.authority-modal
-            v-else
-            color="primary"
-            :elevation="hover ? 12 : 2"
-            fab
-            x-large
-          >
-            <v-icon color="red">fas fa-square</v-icon>
-          </v-btn>
-        </v-hover>
+        <v-dialog v-model="dialog" persistent max-width="600px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-hover v-slot:default="{ hover }">
+              <!-- スタートボタン -->
+              <v-btn
+                @click="
+                  show = !show;
+                  recording();
+                "
+                v-if="show"
+                color="primary"
+                :elevation="hover ? 12 : 2"
+                fab
+                x-large
+              >
+                <v-icon>fas fa-microphone</v-icon>
+              </v-btn>
+
+              <!-- ストップボタン -->
+              <v-btn
+                v-bind="attrs"
+                v-on="on"
+                @click="
+                  show = !show;
+                  stop();
+                "
+                v-else
+                color="primary"
+                :elevation="hover ? 12 : 2"
+                fab
+                x-large
+              >
+                <v-icon color="red">fas fa-square</v-icon>
+              </v-btn>
+            </v-hover>
+          </template>
+          <!-- ダイアログフォーム -->
+          <v-card>
+            <v-card-title>
+              <span class="headline">Minutes Details</span>
+            </v-card-title>
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      label="Title"
+                      required
+                      v-model="title"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      label="Member"
+                      required
+                      v-model="member"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-textarea
+                      rows="3"
+                      label="Note"
+                      required
+                      v-model="note"
+                    ></v-textarea>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="dialog = false"
+                >Close</v-btn
+              >
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="
+                  dialog = false;
+                  register();
+                "
+                >Save</v-btn
+              >
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-row>
     </v-container>
   </v-app>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
+      dialog: false,
       show: true,
       status: "ボタンを押すと音声入力が開始します",
       speech: new window.webkitSpeechRecognition(),
       final: "",
       content: [],
+      title: "",
+      member: "",
+      note: "",
     };
   },
   methods: {
@@ -107,13 +167,23 @@ export default {
       this.speech.stop();
       this.$store.dispatch("setContent", this.final);
     },
+    register() {
+      axios
+        .post("/registerUser", {
+          userId: 1,
+          // userId: this.$store.state.loginUser.userId,
+          title: this.title,
+          content: this.final,
+          member: this.member,
+          remarks: this.note,
+        })
+        .then(() => {
+          this.$router.push("/saveList");
+        });
+    },
   },
   created() {
     this.content = this.$store.state.content;
-    // for (var i = 0; i < this.$store.state.content.length; i++) {
-    //   this.content += this.$store.state.content[i];
-    // }
-
     this.speech.lang = "ja-JP"; // 言語設定
     this.speech.interimResults = true; // 暫定的な結果を返す(true)、そうでないか(false)
     this.speech.continuous = true; // 認識結果を継続的で返す(true)、単一で返す(false)
