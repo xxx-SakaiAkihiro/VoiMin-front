@@ -35,9 +35,11 @@
 <script>
 import firebase from "firebase";
 import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   methods: {
+    ...mapActions(["switchLoginStatus"]),
     toPage(path) {
       this.$router.push(path).catch(err => {
         err;
@@ -45,8 +47,8 @@ export default {
     },
     logout() {
       firebase.auth().signOut();
-      console.log("ログアウトした");
       this.$router.push("/");
+      this.switchLoginStatus(false);
     }
   },
   computed: {
