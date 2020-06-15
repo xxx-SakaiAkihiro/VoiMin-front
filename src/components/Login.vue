@@ -43,7 +43,7 @@ export default {
     Loading
   },
   methods: {
-    ...mapActions(["login", "setLoginUser", "setFirebaseUser"])
+    ...mapActions(["login", "setLoginUser", "setFirebaseUser","switchLoginStatus"])
   },
   mounted() {
     firebase.auth().onAuthStateChanged(user => {
@@ -60,6 +60,7 @@ export default {
           })
           .then(response => {
             this.setLoginUser(response.data);
+            this.switchLoginStatus(true);
             /** メールアドレスのドメインが組織外のユーザーの場合 */
             if (response.data.statusId == 2) {
               this.err =
