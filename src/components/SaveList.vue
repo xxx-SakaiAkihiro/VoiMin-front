@@ -1,45 +1,27 @@
 <template>
-  <v-card class="mx-8 mt-5">
-    <v-list class="mx-5 my-3">
-      <v-subheader
-        class="title"
-        :items="this.filterRecordingList.title"
-      ></v-subheader>
-      <v-list-item @click="toPage('/saveDetail')">
-        <v-list-item-content>
-          <v-list-item-title>タイトル1</v-list-item-title>
-        </v-list-item-content>
-        <v-list-item-action>
-          <v-btn icon>
-            <v-icon color="grey">mdi-delete</v-icon>
-          </v-btn>
-        </v-list-item-action>
-      </v-list-item>
-
-      <v-list-item @click="toPage('/saveDetail')">
-        <v-list-item-content>
-          <v-list-item-title>タイトル2</v-list-item-title>
-        </v-list-item-content>
-        <v-list-item-action>
-          <v-btn icon>
-            <v-icon color="grey">mdi-delete</v-icon>
-          </v-btn>
-        </v-list-item-action>
-      </v-list-item>
-
-      <v-divider></v-divider>
-
-      <v-subheader class="title">2020/6/11</v-subheader>
-      <v-list-item @click="toPage('/saveDetail')">
-        <v-list-item-content>
-          <v-list-item-title>タイトル3</v-list-item-title>
-        </v-list-item-content>
-        <v-list-item-action>
-          <v-btn icon>
-            <v-icon color="grey">mdi-delete</v-icon>
-          </v-btn>
-        </v-list-item-action>
-      </v-list-item>
+  <v-card class="mx-8 my-3 ">
+    <v-list class="mx-10 ">
+      <v-subheader class="title" id="title">SaveRecordingList </v-subheader>
+      <v-list-item-group v-model="dateFilterList">
+        <v-list-itemtwo-line v-for="(item, i) in dateFilterList" :key="i">
+          <v-divider></v-divider>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.date" id="dateTitle">
+            </v-list-item-title>
+            <v-list-item-subtitle v-for="(item, i) in item.itemList" :key="i">
+              <v-list-item>
+                <span @click="toPage('/saveDetail')" id="itemTitle">
+                  {{ item.title }}</span
+                >
+                <v-spacer></v-spacer>
+                <v-btn icon>
+                  <v-icon color="grey">mdi-delete</v-icon>
+                </v-btn>
+              </v-list-item>
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-itemtwo-line>
+      </v-list-item-group>
     </v-list>
   </v-card>
 </template>
@@ -52,7 +34,6 @@ export default {
     return {
       getRecordingList: [],
       recordingList: [],
-      filterRecordingList: [],
     };
   },
   methods: {
@@ -60,6 +41,33 @@ export default {
       this.$router.push(path).catch((err) => {
         err;
       });
+    },
+  },
+  computed: {
+    dateFilterList() {
+      var duplicationDateMap = new Map(
+        this.recordingList.map((r) => [r.date, r.date])
+      );
+      var duplicationDateList = Array.from(duplicationDateMap.values());
+      var dateFilterList = [];
+      for (let num in duplicationDateList) {
+        var filterObject = { date: duplicationDateList[num], itemList: [] };
+        dateFilterList.push(filterObject);
+      }
+
+      for (let num in dateFilterList) {
+        this.recordingList.map(function(array) {
+          if (dateFilterList[num].date === array.date) {
+            var filterRecordingObject = {
+              title: array.title,
+              rcordingId: array.recordingId,
+            };
+            dateFilterList[num].itemList.push(filterRecordingObject);
+          }
+        });
+      }
+      console.log(dateFilterList);
+      return dateFilterList;
     },
   },
   created() {
@@ -81,20 +89,23 @@ export default {
           this.$store.dispatch("setRecordingList", this.recordingList);
         }
       });
-    var duplicationDateList = new Set(this.recordingList.date);
-    var ArrayduplicationDateList = Array.from(duplicationDateList);
-    console.log(ArrayduplicationDateList);
-    for (let num in ArrayduplicationDateList) {
-      this.recordingList.map(function(array) {
-        if (ArrayduplicationDateList[num] === array) {
-          ArrayduplicationDateList[num].push({
-            title: array.title,
-            recordingId: array.recordingId,
-          });
-        }
-      });
-      return (ArrayduplicationDateList = this.filterRecordingList);
-    }
   },
 };
 </script>
+
+<style scoped>
+#title {
+  font-size: 20px;
+  font-weight: 800;
+  padding-left: 20px;
+}
+#dateTitle {
+  font-size: 18px;
+  font-weight: 600;
+  padding-left: 20px;
+}
+#itemTitle {
+  font-size: 18px;
+  padding-left: 30px;
+}
+</style>
