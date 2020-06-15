@@ -1,7 +1,10 @@
 <template>
   <v-card class="mx-8 mt-5">
     <v-list class="mx-5 my-3">
-      <v-subheader class="title">2020/6/12</v-subheader>
+      <v-subheader
+        class="title"
+        :items="this.filterRecordingList.title"
+      ></v-subheader>
       <v-list-item @click="toPage('/saveDetail')">
         <v-list-item-content>
           <v-list-item-title>タイトル1</v-list-item-title>
@@ -52,15 +55,6 @@ export default {
       filterRecordingList: [],
     };
   },
-  // computed: {
-  //   filter() {
-  //     var filterRecordingList = [];
-  //     // for(let num in this.recordingList){
-
-  //     // }
-  //   },
-  // },
-
   methods: {
     toPage(path) {
       this.$router.push(path).catch((err) => {
@@ -87,6 +81,20 @@ export default {
           this.$store.dispatch("setRecordingList", this.recordingList);
         }
       });
+    var duplicationDateList = new Set(this.recordingList.date);
+    var ArrayduplicationDateList = Array.from(duplicationDateList);
+    console.log(ArrayduplicationDateList);
+    for (let num in ArrayduplicationDateList) {
+      this.recordingList.map(function(array) {
+        if (ArrayduplicationDateList[num] === array) {
+          ArrayduplicationDateList[num].push({
+            title: array.title,
+            recordingId: array.recordingId,
+          });
+        }
+      });
+      return (ArrayduplicationDateList = this.filterRecordingList);
+    }
   },
 };
 </script>
