@@ -2,10 +2,13 @@
   <v-card class="mx-8 my-3 ">
     <v-list class="mx-10 ">
       <v-subheader class="title" id="title">SaveRecordingList </v-subheader>
+      <span id="null" v-if="dateFilterList.length === 0">
+        保存されている録音記録はありません。</span
+      >
       <v-list-item-group v-model="dateFilterList">
         <v-list-itemtwo-line v-for="(item, i) in dateFilterList" :key="i">
-          <v-divider></v-divider>
           <v-list-item-content>
+            <v-divider></v-divider>
             <v-list-item-title v-text="item.date" id="dateTitle">
             </v-list-item-title>
             <v-list-item-subtitle v-for="(item, i) in item.itemList" :key="i">
@@ -107,5 +110,11 @@ export default {
 #itemTitle {
   font-size: 18px;
   padding-left: 30px;
+}
+#null {
+  color: rgb(82, 52, 52);
+  font-size: 18px;
+  font-weight: 500;
+  padding-left: 400px;
 }
 </style>
