@@ -5,8 +5,12 @@
       <span id="null" v-if="dateFilterList.length === 0">
         保存されている録音記録はありません。</span
       >
-      <v-list-item-group v-model="dateFilterList">
-        <v-list-itemtwo-line v-for="(item, i) in dateFilterList" :key="i">
+      <v-list-item-group>
+        <v-list-itemtwo-line
+          name="title"
+          v-for="(item, i) in dateFilterList"
+          :key="i"
+        >
           <v-list-item-content>
             <v-divider></v-divider>
             <v-list-item-title v-text="item.date" id="dateTitle">
@@ -18,7 +22,13 @@
                 >
                 <v-spacer></v-spacer>
                 <v-btn icon>
-                  <v-icon color="grey">mdi-delete</v-icon>
+                  <span>
+                    <v-icon
+                      @click="recordingDelete(item.rcordingId)"
+                      color="grey"
+                      >mdi-delete</v-icon
+                    >
+                  </span>
                 </v-btn>
               </v-list-item>
             </v-list-item-subtitle>
@@ -40,6 +50,25 @@ export default {
     };
   },
   methods: {
+    recordingDelete(Id) {
+      if (confirm("削除してよろしいですか？")) {
+        axios
+          .post("/delete", {
+            recordingId: Id,
+          })
+          .then(() => {
+            alert("削除しました");
+            this.$router.go({
+              path: this.$router.currentRoute.path,
+              force: true,
+            });
+          })
+          .catch((e) => {
+            alert("問題が発生しました。もう1度作業をやり直してください。" + e),
+              this.$router.push("/home");
+          });
+      }
+    },
     toPage(path) {
       this.$router.push(path).catch((err) => {
         err;
@@ -69,7 +98,6 @@ export default {
           }
         });
       }
-      console.log(dateFilterList);
       return dateFilterList;
     },
   },
