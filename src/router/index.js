@@ -56,7 +56,7 @@ const routes = [
     },
   },
   {
-    path: "/saveDetail",
+    path: "/saveDetail/:rcordingId",
     name: "SaveDetail",
     component: SaveDetail,
     //ログインしていたら上記のパスに飛ぶことを許可する
