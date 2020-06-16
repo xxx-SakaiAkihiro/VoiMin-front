@@ -1,21 +1,11 @@
 <template>
   <v-app>
     <v-container fluid>
-      <v-textarea
-        class="mx-8 mt-3"
-        outlined
-        auto-grow
-        label="Content"
-        rows="14"
-        v-model="final"
-      >
-      </v-textarea>
+      <v-textarea class="mx-8 mt-3" outlined auto-grow label="Content" rows="14" v-model="final"></v-textarea>
       <!-- ステータスの文章 -->
       <v-row justify="center" class="mb-3">
         <v-card class="text-center" max-width="300">
-          <v-card-subtitle class="display-0.5 font-weight-black blue--text">
-            {{ status }}
-          </v-card-subtitle>
+          <v-card-subtitle class="display-0.5 font-weight-black blue--text">{{ status }}</v-card-subtitle>
         </v-card>
       </v-row>
       <v-row justify="center">
@@ -99,19 +89,17 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="dialog = false"
-                >Close</v-btn
-              >
+              <v-btn color="blue darken-1" style="outline:0" text @click="dialog = false">Close</v-btn>
               <v-btn
                 v-bind:disabled="isPush"
                 color="blue darken-1"
+                style="outline:0"
                 text
                 @click="
                   dialog = false;
                   register();
                 "
-                >Save</v-btn
-              >
+              >Save</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -126,10 +114,10 @@ export default {
   data() {
     return {
       isPush: true,
-      rulesNote: [(v) => v.length <= 200 || "200字以内で記入してください"],
-      rulesMember: [(v) => v.length <= 50 || "50字以内で記入してください"],
-      rulesTitle: [(v) => v.length <= 50 || "50字以内で記入してください"],
-      required: (value) => !!value || "必ず入力してください",
+      rulesNote: [v => v.length <= 200 || "200字以内で記入してください"],
+      rulesMember: [v => v.length <= 50 || "50字以内で記入してください"],
+      rulesTitle: [v => v.length <= 50 || "50字以内で記入してください"],
+      required: value => !!value || "必ず入力してください",
       dialog: false,
       show: true,
       status: "ボタンを押すと音声入力が開始します",
@@ -138,7 +126,7 @@ export default {
       content: [],
       title: "",
       member: "",
-      note: "",
+      note: ""
     };
   },
   methods: {
@@ -163,7 +151,7 @@ export default {
       };
 
       //音声認識サービスが結果を返した時に動く(通常動作);
-      this.speech.onresult = (event) => {
+      this.speech.onresult = event => {
         var final = "";
         var interim = "";
         var results = event.results;
@@ -189,13 +177,13 @@ export default {
           title: this.title,
           content: this.final,
           member: this.member,
-          remarks: this.note,
+          remarks: this.note
         })
         .then(() => {
           alert("議事録内容を保存しました");
           this.$router.push("/saveList");
         })
-        .catch((e) => {
+        .catch(e => {
           alert("問題が発生しました。もう1度作業をやり直してください。" + e);
         });
     },
@@ -214,14 +202,14 @@ export default {
       ) {
         this.isPush = false;
       }
-    },
+    }
   },
   created() {
     this.content = this.$store.state.content;
     this.speech.lang = "ja-JP"; // 言語設定
     this.speech.interimResults = true; // 暫定的な結果を返す(true)、そうでないか(false)
     this.speech.continuous = true; // 認識結果を継続的で返す(true)、単一で返す(false)
-  },
+  }
 };
 </script>
 

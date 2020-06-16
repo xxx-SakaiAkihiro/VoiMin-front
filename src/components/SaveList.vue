@@ -2,20 +2,23 @@
   <v-card class="mx-8 my-3">
     <v-list class="mx-10">
       <v-subheader class="title" id="title">SaveRecordingList</v-subheader>
-      <span id="null" v-if="dateFilterList.length === 0">保存されている録音記録はありません。</span>
+      <center>
+        <div
+          style="font-size:18px;font-weight:bold;"
+          class="ma-5"
+          v-if="dateFilterList.length === 0"
+        >保存されている録音記録はありません。</div>
+      </center>
       <v-list-item-group>
         <v-list-itemtwo-line name="title" v-for="(item, i) in dateFilterList" :key="i">
           <v-list-item-content>
             <v-divider></v-divider>
             <v-list-item-title v-text="item.date" id="dateTitle"></v-list-item-title>
             <v-list-item-subtitle v-for="(item, i) in item.itemList" :key="i">
-              <v-list-item @click="edit(item)" id="itemTitle">
-                <span>{{ item.title }}</span>
-                <v-spacer></v-spacer>
+              <v-list-item id="itemTitle">
+                <v-col cols="18" @click="detail(item)">{{ item.title }}</v-col>
                 <v-btn icon>
-                  <span>
-                    <v-icon @click="recordingDelete(item.rcordingId)" color="grey">mdi-delete</v-icon>
-                  </span>
+                  <v-icon @click="recordingDelete(item.rcordingId)" color="grey">mdi-delete</v-icon>
                 </v-btn>
               </v-list-item>
             </v-list-item-subtitle>
@@ -57,7 +60,7 @@ export default {
           });
       }
     },
-    edit(item) {
+    detail(item) {
       this.$router.push({
         name: "SaveDetail",
         query: { item: encodeURIComponent(JSON.stringify(item)) }
@@ -128,11 +131,5 @@ export default {
 #itemTitle {
   font-size: 18px;
   padding-left: 30px;
-}
-#null {
-  color: rgb(82, 52, 52);
-  font-size: 18px;
-  font-weight: 500;
-  padding-left: 400px;
 }
 </style>
