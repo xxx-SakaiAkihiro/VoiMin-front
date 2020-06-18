@@ -1,10 +1,10 @@
 <template>
   <v-card class="mx-8 my-3">
+    <v-subheader class="title mt-5 ml-4" style="font-weight:bold;">SaveRecordingList</v-subheader>
     <v-list class="mx-10">
-      <v-subheader class="title" id="title">SaveRecordingList</v-subheader>
       <center>
         <div
-          style="font-size:18px;font-weight:bold;"
+          style="font-size:17px;font-weight:bold;"
           class="ma-5"
           v-if="dateFilterList.length === 0"
         >
@@ -22,10 +22,11 @@
             <v-divider></v-divider>
             <v-list-item-title
               v-text="item.date"
-              id="dateTitle"
+              class="mt-5"
+              style="font-size: 17px;font-weight:bold;"
             ></v-list-item-title>
             <v-list-item-subtitle v-for="(item, i) in item.itemList" :key="i">
-              <v-list-item id="itemTitle">
+              <v-list-item style="font-size: 15px;font-weight:bold;">
                 <v-col cols="18" @click="detail(item)">{{ item.title }}</v-col>
                 <v-btn icon>
                   <v-icon @click="recordingDelete(item.rcordingId)" color="grey"
@@ -128,20 +129,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-#title {
-  font-size: 20px;
-  font-weight: 800;
-  padding-left: 20px;
-}
-#dateTitle {
-  font-size: 18px;
-  font-weight: 600;
-  padding-left: 20px;
-}
-#itemTitle {
-  font-size: 18px;
-  padding-left: 30px;
-}
-</style>
