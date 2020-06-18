@@ -1,10 +1,10 @@
 <template>
   <v-card class="mx-8 my-3">
-    <v-subheader class="title mt-5 ml-4" style="font-weight:bold;">SaveRecordingList</v-subheader>
     <v-list class="mx-10">
+      <v-subheader class="title" id="title">SaveRecordingList</v-subheader>
       <center>
         <div
-          style="font-size:17px;font-weight:bold;"
+          style="font-size:18px;font-weight:bold;"
           class="ma-5"
           v-if="dateFilterList.length === 0"
         >
@@ -18,28 +18,28 @@
           v-for="(item, i) in dateFilterList"
           :key="i"
         >
-          <v-list-item-content>
-            <v-divider></v-divider>
-            <v-list-item-title
-              v-text="item.date"
-              class="mt-5"
-              style="font-size: 17px;font-weight:bold;"
-            ></v-list-item-title>
-            <v-list-item-subtitle v-for="(item, i) in item.itemList" :key="i">
-              <v-list-item style="font-size: 15px;font-weight:bold;">
-                <v-col cols="18" @click="detail(item)">{{ item.title }}</v-col>
-                <v-col cols="2">
-                  <v-btn icon>
-                    <v-icon
-                      @click="recordingDelete(item.rcordingId)"
-                      color="grey"
-                      >mdi-delete</v-icon
-                    >
-                  </v-btn>
-                </v-col>
-              </v-list-item>
-            </v-list-item-subtitle>
-          </v-list-item-content>
+          <v-divider></v-divider>
+          <v-list-item-title
+            v-text="item.date"
+            id="dateTitle"
+          ></v-list-item-title>
+          <v-list-item-subtitle v-for="(item, i) in item.itemList" :key="i">
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title
+                  id="itemTitle"
+                  @click="detail(item)"
+                  v-text="item.title"
+                >
+                </v-list-item-title>
+              </v-list-item-content>
+              <v-btn icon cols="3">
+                <v-icon @click="recordingDelete(item.rcordingId)" color="grey"
+                  >mdi-delete</v-icon
+                >
+              </v-btn>
+            </v-list-item>
+          </v-list-item-subtitle>
         </v-list>
       </v-list-item-group>
     </v-list>
@@ -133,3 +133,20 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#title {
+  font-size: 20px;
+  font-weight: 800;
+  padding-left: 20px;
+}
+#dateTitle {
+  font-size: 18px;
+  font-weight: 600;
+  padding-left: 20px;
+}
+#itemTitle {
+  font-size: 18px;
+  padding-left: 30px;
+}
+</style>
