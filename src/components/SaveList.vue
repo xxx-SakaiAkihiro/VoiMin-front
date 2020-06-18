@@ -15,15 +15,18 @@
         <v-list
           two-line
           name="title"
-          v-for="(item, i) in dateFilterList"
+          v-for="(dateFilter, i) in dateFilterList"
           :key="i"
         >
           <v-divider></v-divider>
           <v-list-item-title
-            v-text="item.date"
+            v-text="dateFilter.date"
             id="dateTitle"
           ></v-list-item-title>
-          <v-list-item-subtitle v-for="(item, i) in item.itemList" :key="i">
+          <v-list-item-subtitle
+            v-for="(item, i) in dateFilter.itemList"
+            :key="i"
+          >
             <v-list-item>
               <v-list-item-content>
                 <v-list-item-title
