@@ -16,32 +16,25 @@
       <v-card-text>
         <v-container>
           <v-row>
-            <v-col cols="6">
+            <v-col>
               <v-text-field
                 label="Title"
-                required
                 v-model="param.title"
                 counter="50"
                 :rules="rulesTitle"
                 @keyup="keyUp"
+                class="mb-8"
               ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="6">
               <v-text-field
                 label="Member"
                 v-model="param.member"
                 counter="50"
                 :rules="rulesMember"
                 @keyup="keyUp"
+                class="mb-8"
               ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="6">
               <v-textarea
-                rows="3"
+                rows="4"
                 label="Note"
                 v-model="param.remarks"
                 counter="200"
@@ -49,9 +42,7 @@
                 @keyup="keyUp"
               ></v-textarea>
             </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="6">
+            <v-col>
               <v-textarea outlined auto-grow label="Content" rows="14" v-model="param.content"></v-textarea>
             </v-col>
           </v-row>
