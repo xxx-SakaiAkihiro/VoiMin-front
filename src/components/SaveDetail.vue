@@ -12,25 +12,65 @@
       >
         <v-icon class="mr-1">fas fa-chevron-left</v-icon>一覧
       </v-btn>
-      <v-row class="title" justify="center">{{result[0].date | moment}}</v-row>
-      <v-row class="mt-3">
-        <v-col>
-          <v-text-field label="Title" outlined rounded dense v-model="param.title"></v-text-field>
-        </v-col>
-        <v-col>
-          <v-text-field label="Member" outlined rounded dense v-model="param.member"></v-text-field>
-        </v-col>
-        <v-col>
-          <v-text-field label="Note" outlined rounded dense v-model="param.remarks"></v-text-field>
-        </v-col>
-      </v-row>
-      <v-textarea outlined auto-grow label="Content" rows="14" v-model="param.content"></v-textarea>
+      <v-row class="title" justify="center">{{param.date | moment}}</v-row>
+      <v-card-text>
+        <v-container>
+          <v-row>
+            <v-col cols="6">
+              <v-text-field
+                label="Title"
+                required
+                v-model="param.title"
+                counter="50"
+                :rules="rulesTitle"
+                @keyup="keyUp"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="6">
+              <v-text-field
+                label="Member"
+                v-model="param.member"
+                counter="50"
+                :rules="rulesMember"
+                @keyup="keyUp"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="6">
+              <v-textarea
+                rows="3"
+                label="Note"
+                v-model="param.remarks"
+                counter="200"
+                :rules="rulesNote"
+                @keyup="keyUp"
+              ></v-textarea>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="6">
+              <v-textarea outlined auto-grow label="Content" rows="14" v-model="param.content"></v-textarea>
+            </v-col>
+          </v-row>
 
-      <v-col>
-        <v-btn rounded color="primary" absolute right style="outline:0" @click="edit()">
-          <v-icon class="mr-1">mdi-cached</v-icon>Update
-        </v-btn>
-      </v-col>
+          <v-col>
+            <v-btn
+              rounded
+              color="primary"
+              absolute
+              right
+              style="outline:0"
+              v-bind:disabled="isPush"
+              @click="edit()"
+            >
+              <v-icon class="mr-1">mdi-cached</v-icon>Update
+            </v-btn>
+          </v-col>
+        </v-container>
+      </v-card-text>
     </v-container>
   </v-app>
 </template>
@@ -42,13 +82,21 @@ import moment from "moment";
 export default {
   data() {
     return {
+      isPush: true,
       result: "",
       param: {
+        date: String,
         title: String,
         member: String,
         remarks: String,
         content: String
-      }
+      },
+      rulesTitle: [
+        v => !!v || "必ず入力してください",
+        v => v.length <= 50 || "50字以内で記入してください"
+      ],
+      rulesMember: [v => v.length <= 50 || "50字以内で記入してください"],
+      rulesNote: [v => v.length <= 200 || "200字以内で記入してください"]
     };
   },
   filters: {
@@ -77,6 +125,22 @@ export default {
       });
       alert("投稿内容の変更に成功しました。");
       this.$router.push("/saveList");
+    },
+    keyUp() {
+      if (
+        this.param.remarks.length > 200 ||
+        this.param.member.length > 50 ||
+        this.param.title.length > 50 ||
+        this.param.title.length == 0
+      ) {
+        this.isPush = true;
+      } else if (
+        this.param.remarks.length <= 200 &&
+        this.param.member.length <= 50 &&
+        0 < this.param.title.length <= 50
+      ) {
+        this.isPush = false;
+      }
     }
   },
   mounted() {
@@ -84,6 +148,7 @@ export default {
     this.result = this.recordingList.filter(
       v => v.recordingId === this.rcordingData.rcordingId
     );
+    this.param.date = this.result[0].date;
     this.param.title = this.result[0].title;
     this.param.member = this.result[0].member;
     this.param.remarks = this.result[0].remarks;

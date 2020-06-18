@@ -61,7 +61,7 @@
                       required
                       v-model="title"
                       counter="50"
-                      :rules="[rulesTitle, required]"
+                      :rules="rulesTitle"
                       @keyup="keyUp"
                     ></v-text-field>
                   </v-col>
@@ -114,10 +114,12 @@ export default {
   data() {
     return {
       isPush: true,
-      rulesNote: [v => v.length <= 200 || "200字以内で記入してください"],
+      rulesTitle: [
+        v => !!v || "必ず入力してください",
+        v => v.length <= 50 || "50字以内で記入してください"
+      ],
       rulesMember: [v => v.length <= 50 || "50字以内で記入してください"],
-      rulesTitle: [v => v.length <= 50 || "50字以内で記入してください"],
-      required: value => !!value || "必ず入力してください",
+      rulesNote: [v => v.length <= 200 || "200字以内で記入してください"],
       dialog: false,
       show: true,
       status: "ボタンを押すと音声入力が開始します",

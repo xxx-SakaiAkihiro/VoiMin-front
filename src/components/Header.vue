@@ -10,23 +10,17 @@
       </v-btn>
       <!-- タブ -->
       <template v-slot:extension v-if="this.$route.path !== '/'">
-        <v-tabs align-with-title>
-          <v-tab @click="toPage('/home')">
-            <v-btn icon style="outline:0">
-              <v-icon>far fa-comment-dots</v-icon>
-            </v-btn>
-          </v-tab>
-          <v-tab @click="toPage('/saveList')">
-            <v-btn icon style="outline:0">
-              <v-icon>fas fa-history</v-icon>
-            </v-btn>
-          </v-tab>
-          <v-tab @click="toPage('/how')">
-            <v-btn icon style="outline:0">
-              <v-icon>far fa-question-circle</v-icon>
-            </v-btn>
-          </v-tab>
-        </v-tabs>
+        <v-toolbar-items>
+          <v-btn text min-width="100px" style="outline:0" @click="toPage('/home')">
+            <v-icon>far fa-comment-dots</v-icon>
+          </v-btn>
+          <v-btn text min-width="100px" style="outline:0" @click="toPage('/saveList')">
+            <v-icon>fas fa-history</v-icon>
+          </v-btn>
+          <v-btn text min-width="100px" style="outline:0" @click="toPage('/how')">
+            <v-icon>far fa-question-circle</v-icon>
+          </v-btn>
+        </v-toolbar-items>
       </template>
     </v-app-bar>
   </v-card>
