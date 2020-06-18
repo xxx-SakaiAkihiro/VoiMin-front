@@ -27,11 +27,15 @@
             <v-list-item-subtitle v-for="(item, i) in item.itemList" :key="i">
               <v-list-item id="itemTitle">
                 <v-col cols="18" @click="detail(item)">{{ item.title }}</v-col>
-                <v-btn icon>
-                  <v-icon @click="recordingDelete(item.rcordingId)" color="grey"
-                    >mdi-delete</v-icon
-                  >
-                </v-btn>
+                <v-col cols="2">
+                  <v-btn icon>
+                    <v-icon
+                      @click="recordingDelete(item.rcordingId)"
+                      color="grey"
+                      >mdi-delete</v-icon
+                    >
+                  </v-btn>
+                </v-col>
               </v-list-item>
             </v-list-item-subtitle>
           </v-list-item-content>
