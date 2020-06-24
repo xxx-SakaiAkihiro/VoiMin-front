@@ -7,12 +7,15 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 import firebase from "firebase";
 import VModal from "vue-js-modal";
-import VueLoading from 'vue-loading-template'
+import VueLoading from "vue-loading-template";
 import "@fortawesome/fontawesome-free/css/all.css";
 
 Vue.config.productionTip = false;
 axios.defaults.baseURL = process.env.VUE_APP_API_BASE_URL;
-Vue.use(VueAxios, axios, VModal,VueLoading);
+axios.defaults.headers.common["Access-Control-Expose-Headers"] =
+  "Authorization";
+axios.defaults.headers.common["Authorization"] = store.state.token;
+Vue.use(VueAxios, axios, VModal, VueLoading);
 
 // bootstrap-vueのインポート
 import BootstrapVue from "bootstrap-vue";
