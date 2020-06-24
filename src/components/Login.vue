@@ -43,7 +43,13 @@ export default {
     Loading
   },
   methods: {
-    ...mapActions(["login", "setLoginUser", "setFirebaseUser","switchLoginStatus"])
+    ...mapActions([
+      "login",
+      "setLoginUser",
+      "setFirebaseUser",
+      "switchLoginStatus",
+      "setToken"
+    ])
   },
   mounted() {
     firebase.auth().onAuthStateChanged(user => {
@@ -66,8 +72,41 @@ export default {
               this.err =
                 "メールドメインがrakus-partners.co.jp\nまたはrakus.co.jpのユーザーのみログインできます";
             } else {
-              this.$router.push("/home");
+              axios
+                .post("/signUp", {
+                  mailAddress: googleMailAddress,
+                  password: googleMailAddress
+                })
+                .then(() => {
+                  axios
+                    .post("/login", {
+                      mailAddress: googleMailAddress,
+                      password: googleMailAddress
+                    })
+                    .then(apiLoginResponse => {
+                      this.setLoginUser(response.data);
+                      this.switchLoginStatus(true);
+                      Promise.resolve()
+                        .then(() =>
+                          this.setToken(
+                            apiLoginResponse.headers["authorization"]
+                          )
+                        )
+                        .then(
+                          () =>
+                            (axios.defaults.headers.common[
+                              "Authorization"
+                            ] = this.token)
+                        )
+                        .then(() => this.$router.push("/home"));
+                    });
+                });
             }
+          })
+          .catch(error => {
+            console.log(error);
+            alert("異常が発生しました。");
+            this.$router.push("/");
           });
       } else {
         firebase.auth().signOut();
