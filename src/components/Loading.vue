@@ -1,4 +1,4 @@
-// <template>
+<template>
   <div class="fullview">
     <div class="loading-spacer"></div>
     <vue-loading
