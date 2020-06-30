@@ -1,111 +1,117 @@
 <template>
-  <v-app>
-    <v-container fluid>
-      <v-textarea class="mx-8 mt-3" outlined auto-grow label="Content" rows="14" v-model="final"></v-textarea>
-      <!-- ステータスの文章 -->
-      <v-row justify="center" class="mb-3">
-        <v-card class="text-center" max-width="300">
-          <v-card-subtitle class="display-0.5 font-weight-black blue--text">{{ status }}</v-card-subtitle>
-        </v-card>
-      </v-row>
-      <v-row justify="center">
-        <v-dialog v-model="dialog" persistent max-width="600px">
-          <template v-slot:activator="{ on, attrs }">
-            <v-hover v-slot:default="{ hover }">
-              <!-- スタートボタン -->
-              <v-btn
-                @click="
+  <v-container fluid>
+    <v-textarea
+      class="mx-8 mt-3"
+      outlined
+      auto-grow
+      label="Content"
+      rows="14"
+      v-model="final"
+      background-color="white"
+    ></v-textarea>
+    <!-- ステータスの文章 -->
+    <v-row justify="center" class="mb-3">
+      <v-card class="text-center" max-width="300">
+        <v-card-subtitle class="display-0.5 font-weight-black blue--text">{{ status }}</v-card-subtitle>
+      </v-card>
+    </v-row>
+    <v-row justify="center">
+      <v-dialog v-model="dialog" persistent max-width="600px">
+        <template v-slot:activator="{ on, attrs }">
+          <v-hover v-slot:default="{ hover }">
+            <!-- スタートボタン -->
+            <v-btn
+              @click="
                   show = !show;
                   recording();
                 "
-                v-if="show"
-                color="primary"
-                :elevation="hover ? 12 : 2"
-                fab
-                x-large
-                style="outline:0"
-              >
-                <v-icon>fas fa-microphone</v-icon>
-              </v-btn>
+              v-if="show"
+              color="primary"
+              :elevation="hover ? 12 : 2"
+              fab
+              x-large
+              style="outline:0"
+            >
+              <v-icon>fas fa-microphone</v-icon>
+            </v-btn>
 
-              <!-- ストップボタン -->
-              <v-btn
-                v-bind="attrs"
-                v-on="on"
-                @click="
+            <!-- ストップボタン -->
+            <v-btn
+              v-bind="attrs"
+              v-on="on"
+              @click="
                   show = !show;
                   stop();
                 "
-                v-else
-                color="primary"
-                :elevation="hover ? 12 : 2"
-                fab
-                x-large
-                style="outline:0"
-              >
-                <v-icon color="red">fas fa-square</v-icon>
-              </v-btn>
-            </v-hover>
-          </template>
-          <!-- ダイアログフォーム -->
-          <v-card>
-            <v-card-title>
-              <span class="headline">Minutes Details</span>
-            </v-card-title>
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Title"
-                      required
-                      v-model="title"
-                      counter="50"
-                      :rules="rulesTitle"
-                      @keyup="keyUp"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Member"
-                      v-model="member"
-                      counter="50"
-                      :rules="rulesMember"
-                      @keyup="keyUp"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-textarea
-                      rows="3"
-                      label="Note"
-                      v-model="note"
-                      counter="200"
-                      :rules="rulesNote"
-                      @keyup="keyUp"
-                    ></v-textarea>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" style="outline:0" text @click="dialog = false">Close</v-btn>
-              <v-btn
-                v-bind:disabled="isPush"
-                color="blue darken-1"
-                style="outline:0"
-                text
-                @click="
+              v-else
+              color="primary"
+              :elevation="hover ? 12 : 2"
+              fab
+              x-large
+              style="outline:0"
+            >
+              <v-icon color="red">fas fa-square</v-icon>
+            </v-btn>
+          </v-hover>
+        </template>
+        <!-- ダイアログフォーム -->
+        <v-card>
+          <v-card-title>
+            <span class="headline">Minutes Details</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col cols="12">
+                  <v-text-field
+                    label="Title"
+                    required
+                    v-model="title"
+                    counter="50"
+                    :rules="rulesTitle"
+                    @keyup="keyUp"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                    label="Member"
+                    v-model="member"
+                    counter="50"
+                    :rules="rulesMember"
+                    @keyup="keyUp"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-textarea
+                    rows="3"
+                    label="Note"
+                    v-model="note"
+                    counter="200"
+                    :rules="rulesNote"
+                    @keyup="keyUp"
+                  ></v-textarea>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" style="outline:0" text @click="dialog = false">Close</v-btn>
+            <v-btn
+              v-bind:disabled="isPush"
+              color="blue darken-1"
+              style="outline:0"
+              text
+              @click="
                   dialog = false;
                   register();
                 "
-              >Save</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-row>
-    </v-container>
-  </v-app>
+            >Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

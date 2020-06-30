@@ -1,7 +1,6 @@
 <template>
   <v-card class="mx-8 mt-5">
     <v-list>
-
       <v-list-group no-action>
         <template v-slot:activator>
           <v-list-item-title class="font-weight-bold">このアプリについて</v-list-item-title>
@@ -64,8 +63,7 @@
             </v-list-item-content>
           </template>
           <v-list-item>
-            <v-list-item-title>1. 録音スタートボタンをクリックし発話する
-            </v-list-item-title>
+            <v-list-item-title>1. 録音スタートボタンをクリックし発話する</v-list-item-title>
           </v-list-item>
           <v-list-item>
             <v-list-item-title>2. 録音ストップボタンをクリック</v-list-item-title>

@@ -113,6 +113,7 @@ export default {
             alert("異常が発生しました。");
             this.$router.push("/");
           });
+          this.loading = true;
       } else {
         firebase.auth().signOut();
       }

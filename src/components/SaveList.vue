@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-8 my-3">
+  <v-card class="mx-8 my-5">
     <v-subheader class="title ml-3 mt-2">SaveRecordingList</v-subheader>
     <v-list class="mx-10">
       <center>
@@ -10,33 +10,16 @@
         >保存されている録音記録はありません。</div>
       </center>
       <v-list-item-group>
-        <v-list
-          two-line
-          name="title"
-          v-for="(dateFilter, i) in dateFilterList"
-          :key="i"
-        >
+        <v-list two-line name="title" v-for="(dateFilter, i) in dateFilterList" :key="i">
           <v-divider class="mt-0"></v-divider>
-          <v-list-item-title
-            v-text="dateFilter.date"
-            style="font-size:17px;font-weight:bold;"
-          ></v-list-item-title>
-          <v-list-item-subtitle
-            v-for="(item, i) in dateFilter.itemList"
-            :key="i"
-          >
+          <v-list-item-title v-text="dateFilter.date" style="font-size:17px;font-weight:bold;"></v-list-item-title>
+          <v-list-item-subtitle v-for="(item, i) in dateFilter.itemList" :key="i">
             <v-list-item>
               <v-list-item-content @click="detail(item)">
-                <v-list-item-title
-                  v-text="item.title"
-                  style="font-size:16px;"
-                >
-                </v-list-item-title>
+                <v-list-item-title v-text="item.title" style="font-size:16px;"></v-list-item-title>
               </v-list-item-content>
               <v-btn icon cols="3">
-                <v-icon @click="recordingDelete(item.rcordingId)" color="grey"
-                  >mdi-delete</v-icon
-                >
+                <v-icon @click="recordingDelete(item.rcordingId)" color="grey">mdi-delete</v-icon>
               </v-btn>
             </v-list-item>
           </v-list-item-subtitle>

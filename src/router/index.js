@@ -2,7 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
-import Explanation from "../views/Explanation.vue";
 import SaveList from "../views/SaveList.vue";
 import SaveDetail from "../views/SaveDetail.vue";
 import How from "../views/How.vue";
@@ -20,19 +19,6 @@ const routes = [
     path: "/home",
     name: "Home",
     component: Home,
-    //ログインしていたら上記のパスに飛ぶことを許可する
-    beforeEnter(to, from, next) {
-      if (store.state.loginStatus) {
-        next();
-      } else {
-        next("/");
-      }
-    },
-  },
-  {
-    path: "/explanation",
-    name: "Explanation",
-    component: Explanation,
     //ログインしていたら上記のパスに飛ぶことを許可する
     beforeEnter(to, from, next) {
       if (store.state.loginStatus) {

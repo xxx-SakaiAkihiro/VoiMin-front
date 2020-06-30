@@ -1,5 +1,4 @@
 <template>
-  <v-app>
     <v-container fluid class="mt-5">
       <v-btn
         @click="$router.go(-1)"
@@ -43,7 +42,7 @@
               ></v-textarea>
             </v-col>
             <v-col>
-              <v-textarea outlined auto-grow label="Content" rows="14" v-model="param.content"></v-textarea>
+              <v-textarea outlined auto-grow label="Content" rows="14" v-model="param.content" @keyup="keyUp"></v-textarea>
             </v-col>
           </v-row>
 
@@ -63,7 +62,6 @@
         </v-container>
       </v-card-text>
     </v-container>
-  </v-app>
 </template>
 
 <script>
