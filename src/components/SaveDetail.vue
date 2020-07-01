@@ -1,67 +1,74 @@
 <template>
-    <v-container fluid class="mt-5">
-      <v-btn
-        @click="$router.go(-1)"
-        text
-        x-large
-        rounded
-        color="primary"
-        style="outline:0"
-        class="font-weight-bold"
-      >
-        <v-icon class="mr-1">fas fa-chevron-left</v-icon>一覧
-      </v-btn>
-      <v-row class="title" justify="center">{{param.date | moment}}</v-row>
-      <v-card-text>
-        <v-container>
-          <v-row>
-            <v-col>
-              <v-text-field
-                label="Title"
-                v-model="param.title"
-                counter="50"
-                :rules="rulesTitle"
-                @keyup="keyUp"
-                class="mb-8"
-              ></v-text-field>
-              <v-text-field
-                label="Member"
-                v-model="param.member"
-                counter="50"
-                :rules="rulesMember"
-                @keyup="keyUp"
-                class="mb-8"
-              ></v-text-field>
-              <v-textarea
-                rows="4"
-                label="Note"
-                v-model="param.remarks"
-                counter="200"
-                :rules="rulesNote"
-                @keyup="keyUp"
-              ></v-textarea>
-            </v-col>
-            <v-col>
-              <v-textarea outlined auto-grow label="Content" rows="14" v-model="param.content" @keyup="keyUp"></v-textarea>
-            </v-col>
-          </v-row>
-
+  <v-container fluid class="mt-5">
+    <v-btn
+      @click="$router.go(-1)"
+      text
+      x-large
+      rounded
+      color="primary"
+      style="outline:0"
+      class="font-weight-bold"
+    >
+      <v-icon class="mr-1">fas fa-chevron-left</v-icon>一覧
+    </v-btn>
+    <v-row class="title" justify="center">{{param.date | moment}}</v-row>
+    <v-card-text>
+      <v-container>
+        <v-row>
           <v-col>
-            <v-btn
-              rounded
-              color="primary"
-              absolute
-              right
-              style="outline:0"
-              v-bind:disabled="isPush"
-              @click="edit()"
-            >
-              <v-icon class="mr-1">mdi-cached</v-icon>Update
-            </v-btn>
+            <v-text-field
+              label="Title"
+              v-model="param.title"
+              counter="50"
+              :rules="rulesTitle"
+              @keyup="keyUp"
+              class="mb-8"
+            ></v-text-field>
+            <v-text-field
+              label="Member"
+              v-model="param.member"
+              counter="50"
+              :rules="rulesMember"
+              @keyup="keyUp"
+              class="mb-8"
+            ></v-text-field>
+            <v-textarea
+              rows="4"
+              label="Note"
+              v-model="param.remarks"
+              counter="200"
+              :rules="rulesNote"
+              @keyup="keyUp"
+            ></v-textarea>
           </v-col>
-        </v-container>
-      </v-card-text>
-    </v-container>
+          <v-col>
+            <v-textarea
+              outlined
+              auto-grow
+              label="Content"
+              rows="14"
+              v-model="param.content"
+              @keyup="keyUp"
+            ></v-textarea>
+          </v-col>
+        </v-row>
+
+        <v-col>
+          <v-btn
+            rounded
+            color="primary"
+            absolute
+            right
+            style="outline:0"
+            v-bind:disabled="isPush"
+            @click="edit()"
+          >
+            <v-icon class="mr-1">mdi-cached</v-icon>Update
+          </v-btn>
+        </v-col>
+      </v-container>
+    </v-card-text>
+  </v-container>
 </template>
 
 <script>
@@ -80,6 +87,7 @@ export default {
         remarks: String,
         content: String
       },
+      date: "",
       rulesTitle: [
         v => !!v || "必ず入力してください",
         v => v.length <= 50 || "50字以内で記入してください"

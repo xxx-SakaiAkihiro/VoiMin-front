@@ -18,7 +18,7 @@ export default new Vuex.Store({
     },
     firebaseUser: null,
     loginStatus: false,
-    token:"",
+    token: "",
   },
   mutations: {
     /**
@@ -57,10 +57,10 @@ export default new Vuex.Store({
       state.loginStatus = isLogin;
     },
     /* トークンをセットするメソッド.
-     * @param {*} token トークン 
+     * @param {*} token トークン
      */
-    setToken(state,token){
-      state.token = token
+    setToken(state, token) {
+      state.token = token;
     },
   },
   actions: {
@@ -112,8 +112,8 @@ export default new Vuex.Store({
      * tokenをstateにセットする
      * @param {*} token トークン
      */
-    setToken({commit},token){
-      commit("setToken",token);
+    setToken({ commit }, token) {
+      commit("setToken", token);
     },
   },
   getters: {
